@@ -48,10 +48,25 @@
             height: 100%;
             background: black;
         }
+        .cursor-dot {
+            position: fixed;
+            width: 12px;
+            height: 12px;
+            background: #00ff6a;
+            border-radius: 50%;
+            pointer-events: none;
+            z-index: 10000;
+            box-shadow:
+                    0 0 10px #00ff6a,
+                    0 0 20px #00ff6a,
+                    0 0 30px #00ff6a;
+            transform: translate(-50%, -50%);
+        }
     </style>
 </head>
 <body>
 <canvas id="matrixCanvas"></canvas>
+<div class="cursor-dot" id="cursor"></div>
 
 <header class="band band--top">
     <div class="nav container">
@@ -174,6 +189,14 @@
     window.addEventListener("resize", () => {
         canvas.width = window.innerWidth;
         canvas.height = window.innerHeight;
+    });
+</script>
+
+<script>
+    const cursor = document.getElementById('cursor');
+    document.addEventListener('mousemove', e => {
+        cursor.style.left = e.clientX + 'px';
+        cursor.style.top = e.clientY + 'px';
     });
 </script>
 
