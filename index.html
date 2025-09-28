@@ -1,0 +1,181 @@
+<!doctype html>
+<html lang="en">
+<head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>Catz</title>
+    <link rel="icon" type="image/png" href="e2b587642de45ba2fd06a9ce18c8b80dtplv-tiktokx-cropcenter_1080_1080.png">
+
+    <!-- FIXED: styles.css -->
+    <link href="syles.css" rel="stylesheet" />
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;600;700&display=swap" rel="stylesheet">
+    <style>
+        /* Minimal modal CSS — you can move this into styles.css */
+        .modal {
+            display: none;
+            position: fixed;
+            inset: 0;
+            background: rgba(0,0,0,.85);
+            justify-content: center;
+            align-items: center;
+            z-index: 9999;
+            padding: 24px;
+            cursor: zoom-out; /* hint you can click to close */
+        }
+        .modal img {
+            max-width: 95vw;
+            max-height: 90vh;
+            border-radius: 12px;
+            box-shadow: 0 10px 30px rgba(0,0,0,.4);
+            cursor: default;
+        }
+        .modal .close {
+            position: absolute;
+            top: 16px;
+            right: 22px;
+            font-size: 40px;
+            color: #fff;
+            line-height: 1;
+            cursor: pointer;
+            user-select: none;
+        }
+        #matrixCanvas {
+            position: fixed;
+            top: 0;
+            left: 0;
+            z-index: -1; /* behind all content */
+            width: 100%;
+            height: 100%;
+            background: black;
+        }
+    </style>
+</head>
+<body>
+<canvas id="matrixCanvas"></canvas>
+
+<header class="band band--top">
+    <div class="nav container">
+        <div class="nav__left">
+
+        </div>
+
+        <nav class="nav__right" style="padding-right: 30px">
+            <a href="https://dexscreener.com/solana" class="nav__link">dex</a>
+            <a href="https://x.com/i/communities/1972025298284921238" class="nav__link">community</a>
+        </nav>
+    </div>
+    <div class="hero container">
+        <img src="e2b587642de45ba2fd06a9ce18c8b80dtplv-tiktokx-cropcenter_1080_1080.png" alt="Catz Meme" class="hero__gif">
+        <p class="hero__sub" id="ca">
+            H1XL8qRsthUTZg2XpM8YmkfYuryL9cA7wywyYGsdpump
+        </p>
+        <div class="btn-group">
+            <button id="copyBtn" class="btn">Copy</button>
+            <a class="btn" href="https://pump.fun/coin/H1XL8qRsthUTZg2XpM8YmkfYuryL9cA7wywyYGsdpump">get $coded</a>
+        </div>
+
+    </div>
+</header>
+
+<main class="content">
+    <section class="container section">
+
+        <div class="grid">
+            <img src="1.png" alt="meme 1" onclick="openModal(this.src)">
+            <img src="2.png" alt="meme 2" onclick="openModal(this.src)">
+            <img src="3.png" alt="meme 3" onclick="openModal(this.src)">
+            <img src="4.png" alt="meme 4" onclick="openModal(this.src)">
+            <img src="5.png" alt="meme 5" onclick="openModal(this.src)">
+            <img src="6.png" alt="meme 6" onclick="openModal(this.src)">
+            <img src="7.png" alt="meme 7" onclick="openModal(this.src)">
+            <img src="8.png" alt="meme 8" onclick="openModal(this.src)">
+        </div>
+    </section>
+
+</main>
+
+
+<!-- ADD: modal markup -->
+<div id="modal" class="modal" onclick="closeModal(event)">
+    <span class="close" aria-label="Close">&times;</span>
+    <img id="modalImg" alt="">
+</div>
+
+<script>
+    function openModal(src) {
+        const modal = document.getElementById('modal');
+        const img = document.getElementById('modalImg');
+        img.src = src;
+        modal.style.display = 'flex';
+        // optional: lock background scroll
+        document.body.style.overflow = 'hidden';
+    }
+
+    // Close when clicking overlay or the X (but not when clicking the image itself)
+    function closeModal(e) {
+        const modal = document.getElementById('modal');
+        if (e.target.id === 'modal' || e.target.classList.contains('close')) {
+            modal.style.display = 'none';
+            document.body.style.overflow = '';
+        }
+    }
+
+    // Also close on ESC
+    document.addEventListener('keydown', (e) => {
+        if (e.key === 'Escape') {
+            document.getElementById('modal').style.display = 'none';
+            document.body.style.overflow = '';
+        }
+    });
+</script>
+<script>
+    document.getElementById("copyBtn").addEventListener("click", () => {
+        navigator.clipboard.writeText("H1XL8qRsthUTZg2XpM8YmkfYuryL9cA7wywyYGsdpump").then(() => {
+            alert("Wallet copied: " + H1XL8qRsthUTZg2XpM8YmkfYuryL9cA7wywyYGsdpump);
+        }).catch(err => {
+            console.error("Failed to copy: ", err);
+        });D
+    });
+
+</script>
+<script>
+    const canvas = document.getElementById("matrixCanvas");
+    const ctx = canvas.getContext("2d");
+
+    canvas.width = window.innerWidth;
+    canvas.height = window.innerHeight;
+
+    const chars = "アァイィウヴエエオカキクケコサシスセソタチツテトナニヌネノハヒフヘホ0123456789";
+    const fontSize = 16;
+    const columns = canvas.width / fontSize;
+    const drops = Array.from({ length: columns }).fill(1);
+
+    function drawMatrix() {
+        ctx.fillStyle = "rgba(0, 0, 0, 0.05)";
+        ctx.fillRect(0, 0, canvas.width, canvas.height);
+
+        ctx.fillStyle = "#0F0"; // neon green
+        ctx.font = fontSize + "px monospace";
+
+        for (let i = 0; i < drops.length; i++) {
+            const text = chars.charAt(Math.floor(Math.random() * chars.length));
+            ctx.fillText(text, i * fontSize, drops[i] * fontSize);
+
+            if (drops[i] * fontSize > canvas.height && Math.random() > 0.975) {
+                drops[i] = 0;
+            }
+
+            drops[i]++;
+        }
+    }
+
+    setInterval(drawMatrix, 35);
+
+    window.addEventListener("resize", () => {
+        canvas.width = window.innerWidth;
+        canvas.height = window.innerHeight;
+    });
+</script>
+
+</body>
+</html>
