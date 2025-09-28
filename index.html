@@ -50,23 +50,39 @@
         }
         .cursor-dot {
             position: fixed;
-            width: 12px;
-            height: 12px;
+            width: 10px;
+            height: 10px;
             background: #00ff6a;
             border-radius: 50%;
             pointer-events: none;
             z-index: 10000;
-            box-shadow:
-                    0 0 10px #00ff6a,
-                    0 0 20px #00ff6a,
-                    0 0 30px #00ff6a;
             transform: translate(-50%, -50%);
+            box-shadow:
+                    0 0 6px #00ff6a,
+                    0 0 12px #00ff6a,
+                    0 0 18px #00ff6a;
+        }
+
+        .trail-dot {
+            position: fixed;
+            width: 6px;
+            height: 6px;
+            background: #00ff6a;
+            border-radius: 50%;
+            pointer-events: none;
+            z-index: 9999;
+            transform: translate(-50%, -50%);
+            opacity: 0.4;
+            box-shadow:
+                    0 0 4px #00ff6a,
+                    0 0 8px #00ff6a;
         }
     </style>
 </head>
 <body>
 <canvas id="matrixCanvas"></canvas>
 <div class="cursor-dot" id="cursor"></div>
+<div id="trail"></div>
 
 <header class="band band--top">
     <div class="nav container">
@@ -193,12 +209,37 @@
 </script>
 
 <script>
-    const cursor = document.getElementById('cursor');
-    document.addEventListener('mousemove', e => {
-        cursor.style.left = e.clientX + 'px';
-        cursor.style.top = e.clientY + 'px';
+    const cursor = document.getElementById("cursor");
+    const trailContainer = document.getElementById("trail");
+
+    let mouseX = 0, mouseY = 0;
+
+    document.addEventListener("mousemove", e => {
+        mouseX = e.clientX;
+        mouseY = e.clientY;
+
+        // Move main cursor
+        cursor.style.left = mouseX + "px";
+        cursor.style.top = mouseY + "px";
+
+        // Create trail dot
+        const trail = document.createElement("div");
+        trail.classList.add("trail-dot");
+        trail.style.left = mouseX + "px";
+        trail.style.top = mouseY + "px";
+        trailContainer.appendChild(trail);
+
+        // Animate out and remove
+        setTimeout(() => {
+            trail.style.opacity = "0";
+        }, 50);
+        setTimeout(() => {
+            trail.remove();
+        }, 400);
     });
 </script>
+
+
 
 </body>
 </html>
