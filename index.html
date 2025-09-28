@@ -77,6 +77,38 @@
                     0 0 4px #00ff6a,
                     0 0 8px #00ff6a;
         }
+        .typewriter-container {
+            display: flex;
+            justify-content: center;
+            padding: 40px 20px;
+            margin-top: 40px;
+        }
+
+        .typewriter-bg {
+            background: rgba(0, 0, 0, 0.6);
+            padding: 24px 32px;
+            border-radius: 12px;
+            max-width: 1000px;
+            width: 100%;
+            color: #00ff6a;
+            font-family: 'Courier New', Courier, monospace;
+            font-size: 18px;
+            text-shadow: 0 0 5px #00ff6a, 0 0 10px #00ff6a;
+            white-space: pre-wrap;
+            line-height: 1.6;
+            position: relative;
+        }
+
+        .blinking-cursor {
+            color: #00ff6a;
+            animation: blink 1s step-start infinite;
+            font-weight: bold;
+        }
+
+        @keyframes blink {
+            50% { opacity: 0; }
+        }
+
     </style>
 </head>
 <body>
@@ -107,6 +139,11 @@
 
     </div>
 </header>
+<section class="typewriter-container">
+    <div class="typewriter-bg">
+        <pre id="typedText"></pre><span class="blinking-cursor">▌</span>
+    </div>
+</section>
 
 <main class="content">
     <section class="container section">
@@ -239,6 +276,63 @@
     });
 </script>
 
+<script>
+    const fullText = `Every chart has noise, but $coded is clarity.
+A meme with purpose, a token with weight.
+Built on belief, powered by people,
+$coded is the moment we’ve been waiting for.`;
+
+    const target = document.getElementById('typedText');
+    const blinkingCursor = document.querySelector('.blinking-cursor');
+
+    const typingSound = new Audio('https://cdn.pixabay.com/audio/2021/08/04/audio_9224f3a9a0.mp3');
+    typingSound.volume = 0.2;
+
+    let i = 0;
+    const speed = 50;
+    const decryptSpeed = 5;
+
+    function getRandomChar() {
+        const chars = '01$@#*&^!?+=-';
+        return chars[Math.floor(Math.random() * chars.length)];
+    }
+
+    function typeWithDecrypt() {
+        if (i < fullText.length) {
+            const currentChar = fullText[i];
+            let tempChar = getRandomChar();
+
+            const showChar = (char) => {
+                if (char === '\n') {
+                    target.innerHTML += '<br>';
+                } else {
+                    target.innerHTML += char;
+                }
+                typingSound.pause();
+                typingSound.currentTime = 0;
+                typingSound.play();
+                i++;
+                setTimeout(typeWithDecrypt, speed);
+            };
+
+            // Show glitchy char briefly before real one
+            if (currentChar !== ' ' && currentChar !== '\n') {
+                target.innerHTML += `<span style="color:#006400">${tempChar}</span>`;
+                setTimeout(() => {
+                    target.innerHTML = target.innerHTML.slice(0, -1); // remove glitch
+                    showChar(currentChar);
+                }, decryptSpeed);
+            } else {
+                showChar(currentChar);
+            }
+
+        } else {
+            blinkingCursor.remove();
+        }
+    }
+
+    window.addEventListener('load', typeWithDecrypt);
+</script>
 
 
 </body>
