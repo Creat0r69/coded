@@ -134,7 +134,56 @@
         @keyframes blink {
             50% { opacity: 0; }
         }
+        .wallet-box {
+            display: inline-flex;
+            align-items: center;
+            padding: 10px 14px;
+            border: 2px solid #00ff6a;
+            border-radius: 8px;
+            color: #00ff6a;
+            font-family: 'Courier New', Courier, monospace;
+            font-size: 14px;
+            text-shadow: 0 0 5px #00ff6a, 0 0 10px #00ff6a;
+            background: rgba(0, 0, 0, 0.3);
+            box-shadow: 0 0 10px #00ff6a66;
+            flex-wrap: wrap;
+            gap: 10px;
+            max-width: 90%;
+            margin: 0 auto;
+            word-break: break-all;
+        }
 
+        .wallet-label {
+            display: inline-block;
+            padding: 4px 10px;
+            border: 2px solid #00ff6a;
+            border-radius: 6px;
+            margin-right: 10px;
+            font-weight: bold;
+            background: rgba(0, 0, 0, 0.4);
+            font-size: 13px;
+            text-transform: uppercase;
+            box-shadow: 0 0 5px #00ff6a;
+            white-space: nowrap;
+        }
+
+        .wallet-address {
+            flex: 1;
+            word-break: break-all;
+            font-weight: 600;
+        }
+        @media (max-width: 480px) {
+            .wallet-box {
+                font-size: 12px;
+                padding: 8px 10px;
+            }
+
+            .wallet-label {
+                font-size: 11px;
+                padding: 3px 8px;
+                margin-right: 6px;
+            }
+        }
     </style>
 </head>
 <body>
@@ -155,9 +204,9 @@
     </div>
     <div class="hero container">
         <img src="e2b587642de45ba2fd06a9ce18c8b80dtplv-tiktokx-cropcenter_1080_1080.png" alt="coded Meme" class="hero__gif">
-        <p class="hero__sub" id="ca">
-            <span class="wallet-label">$coded:</span> H1XL8qRsthUTZg2XpM8YmkfYuryL9cA7wywyYGsdpump
-        </p>
+        <div class="wallet-box">
+            <span class="wallet-address">H1XL8qRsthUTZg2XpM8YmkfYuryL9cA7wywyYGsdpump</span>
+        </div>
 
         <div class="btn-group">
             <button id="copyBtn" class="btn">Copy</button>
