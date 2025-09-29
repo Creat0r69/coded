@@ -82,6 +82,7 @@
             justify-content: center;
             padding: 40px 20px;
             margin-top: 40px;
+            box-sizing: border-box;
         }
 
         .typewriter-bg {
@@ -92,10 +93,10 @@
             width: 100%;
             color: #00ff6a;
             font-family: 'Courier New', Courier, monospace;
-            font-size: 18px;
+            font-size: 4vw; /* responsive font size on mobile */
             text-shadow: 0 0 5px #00ff6a, 0 0 10px #00ff6a;
             white-space: pre-wrap;
-            line-height: 1.6;
+            line-height: 1.5;
             position: relative;
         }
 
@@ -108,7 +109,12 @@
         @keyframes blink {
             50% { opacity: 0; }
         }
-
+        @media (min-width: 768px) {
+            .typewriter-bg {
+                font-size: 18px; /* desktop font */
+                padding: 24px 32px;
+            }
+        }
     </style>
 </head>
 <body>
